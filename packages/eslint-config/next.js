@@ -11,7 +11,6 @@ module.exports = {
     "eslint-config-turbo",
   ],
   globals: {
-    React: true,
     JSX: true,
   },
   env: {
@@ -31,4 +30,8 @@ module.exports = {
     "node_modules/",
   ],
   overrides: [{ files: ["*.js?(x)", "*.ts?(x)"] }],
+  rules: {
+    "no-redeclare": "off",
+    "@typescript-eslint/no-redeclare": "off",
+  },
 };
