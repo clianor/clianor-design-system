@@ -11,6 +11,7 @@ module.exports = {
     require.resolve("@vercel/style-guide/eslint/next"),
     "eslint-config-turbo",
   ],
+  parser: "@typescript-eslint/parser",
   globals: {
     JSX: true,
   },

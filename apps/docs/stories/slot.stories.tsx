@@ -18,7 +18,7 @@ type Story = StoryObj<typeof Slot>;
 export const Default: Story = {
   render: () => (
     <SlotWithSlottable>
-      <b>hello</b>
+      <b>Hello</b>
     </SlotWithSlottable>
   ),
 };
@@ -26,14 +26,14 @@ export const Default: Story = {
 export const WithComposedEvents: Story = {
   render: () => (
     <>
-      <h1>Should log both</h1>
+      <h1>둘다 출력 됨.</h1>
       <SlotWithPreventableEvent>
         <button onClick={() => console.log('button click')}>
-          Slot event not prevented
+          Slot 이벤트가 중단되지 않음.
         </button>
       </SlotWithPreventableEvent>
 
-      <h1>Should log "button click"</h1>
+      <h1>"버튼 클릭"이 출력됨.</h1>
       <SlotWithPreventableEvent>
         <button
           onClick={(event) => {
@@ -41,18 +41,18 @@ export const WithComposedEvents: Story = {
             event.preventDefault();
           }}
         >
-          Slot event prevented
+          Slot 이벤트가 중단됨.
         </button>
       </SlotWithPreventableEvent>
 
-      <h1>Should log both</h1>
+      <h1>둘다 출력 됨.</h1>
       <SlotWithoutPreventableEvent>
         <button onClick={() => console.log('button click')}>
-          Slot event not prevented
+          Slot 이벤트가 중단되지 않음.
         </button>
       </SlotWithoutPreventableEvent>
 
-      <h1>Should log both</h1>
+      <h1>둘다 출력 됨.</h1>
       <SlotWithoutPreventableEvent>
         <button
           onClick={(event) => {
@@ -60,7 +60,7 @@ export const WithComposedEvents: Story = {
             event.preventDefault();
           }}
         >
-          Slot event prevented
+          Slot 이벤트가 중단됨.
         </button>
       </SlotWithoutPreventableEvent>
     </>
@@ -70,7 +70,7 @@ export const WithComposedEvents: Story = {
 const SlotWithSlottable = ({ children, ...props }: any) => (
   <Slot {...props}>
     <Slottable>{children}</Slottable>&nbsp;
-    <span>world</span>
+    <span>World</span>
   </Slot>
 );
 

@@ -8,27 +8,19 @@ import { composeRefs } from '@repo/utils';
 
 type SlotProps = React.HTMLAttributes<HTMLElement>;
 
+/**
+ * 자식 요소 중에서 isSlottable 함수에 의해 Slottable 하다고 판정된 요소가 있다면,
+ * 그 요소의 자식을 새로운 요소로 렌더링 하는 컴포넌트.
+ */
 const Slot = React.forwardRef<HTMLElement, SlotProps>((props, forwardedRef) => {
   const { children, ...slotProps } = props;
   const childrenArray = React.Children.toArray(children);
   const slottable = childrenArray.find(isSlottable);
 
   if (slottable) {
-    // the new element to render is the one passed as a child of `Slottable`
+    // 'Slottable'의 자식이 새로운 요소로 렌더링됩니다.
     const newElement = slottable.props.children as React.ReactNode;
-
-    const newChildren = childrenArray.map((child) => {
-      if (child === slottable) {
-        // because the new element will be the one rendered, we are only interested
-        // in grabbing its children (`newElement.props.children`)
-        if (React.Children.count(newElement) > 1)
-          return React.Children.only(null);
-        return React.isValidElement(newElement)
-          ? (newElement.props.children as React.ReactNode)
-          : null;
-      }
-      return child;
-    });
+    const newChildren = getNewChildren(childrenArray, slottable, newElement);
 
     return (
       <SlotClone {...slotProps} ref={forwardedRef}>
@@ -53,6 +45,9 @@ Slot.displayName = 'Slot';
 
 type SlotCloneProps = React.PropsWithChildren;
 
+/**
+ * 자식 요소가 유효한 React 요소라면 해당 요소를 복제해서 복제한 요소에 props와 ref를 병합하는 컴포넌트.
+ */
 const SlotClone = React.forwardRef<any, SlotCloneProps>(
   (props, forwardedRef) => {
     const { children, ...slotProps } = props;
@@ -86,44 +81,46 @@ const Slottable: React.FC<SlottableProps> = ({ children }) => {
 /* -------------------------------------------------------------------------------------------------
  * Utils
  * -----------------------------------------------------------------------------------------------*/
-
 type AnyProps = Record<string, any>;
 
 function isSlottable(child: React.ReactNode): child is React.ReactElement {
   return React.isValidElement(child) && child.type === Slottable;
 }
 
+function getNewChildren(
+  childrenArray: React.ReactNode[],
+  slottable: React.ReactElement,
+  newElement: React.ReactNode,
+) {
+  return childrenArray.map((child) => {
+    if (child !== slottable) return child;
+    if (React.Children.count(newElement) > 1) return React.Children.only(null);
+    return React.isValidElement(newElement) ? newElement.props.children : null;
+  });
+}
+
 function mergeProps(slotProps: AnyProps, childProps: AnyProps): AnyProps {
-  // all child props should override
   const overrideProps = { ...childProps };
 
-  for (const propName in childProps) {
+  Object.entries(childProps).forEach(([propName, childPropValue]) => {
     const slotPropValue = slotProps[propName];
-    const childPropValue = childProps[propName];
-
     const isHandler = /^on[A-Z]/.test(propName);
-    if (isHandler) {
-      // if the handler exists on both, we compose them
-      if (slotPropValue && childPropValue) {
-        overrideProps[propName] = (...args: unknown[]) => {
-          childPropValue(...args);
-          slotPropValue(...args);
-        };
-      }
-      // but if it exists only on the slot, we use only this one
-      else if (slotPropValue) {
-        overrideProps[propName] = slotPropValue;
-      }
-    }
-    // if it's `style`, we merge them
-    else if (propName === 'style') {
+
+    if (isHandler && slotPropValue) {
+      overrideProps[propName] = (...args: unknown[]) => {
+        childPropValue(...args);
+        slotPropValue(...args);
+      };
+    } else if (isHandler && !childPropValue) {
+      overrideProps[propName] = slotPropValue;
+    } else if (propName === 'style') {
       overrideProps[propName] = { ...slotPropValue, ...childPropValue };
     } else if (propName === 'className') {
       overrideProps[propName] = [slotPropValue, childPropValue]
         .filter(Boolean)
         .join(' ');
     }
-  }
+  });
 
   return { ...slotProps, ...overrideProps };
 }
