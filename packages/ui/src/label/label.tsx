@@ -5,9 +5,10 @@ import React from 'react';
  * -----------------------------------------------------------------------------------------------*/
 
 const NAME = 'label' as const;
+type ELEMENT_TYPE = 'label';
 
-type LabelElement = React.ElementRef<typeof NAME>;
-type PrimitiveLabelProps = React.ComponentPropsWithoutRef<typeof NAME>;
+type LabelElement = React.ElementRef<ELEMENT_TYPE>;
+type PrimitiveLabelProps = React.ComponentPropsWithoutRef<ELEMENT_TYPE>;
 
 type LabelProps = PrimitiveLabelProps;
 
