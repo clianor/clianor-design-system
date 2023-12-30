@@ -6,7 +6,7 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "generate-commit": "npx ollama-commit --signature true"
+    "generate-commit": "npx ollama-commit --signature"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
