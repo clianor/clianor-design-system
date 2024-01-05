@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Primitive } from '..';
 import { AvatarFallback, type AvatarFallbackProps } from './avatar-fallback';
 import { AvatarImage, type AvatarImageProps } from './avatar-image';
 import { AvatarProvider } from './avatar.context';
@@ -9,8 +10,8 @@ import { AvatarProvider } from './avatar.context';
  * -----------------------------------------------------------------------------------------------*/
 
 const NAME = 'Avatar';
-type ELEMENT_TYPE = 'span';
 
+type ELEMENT_TYPE = typeof Primitive.span;
 type AvatarEelement = React.ElementRef<ELEMENT_TYPE>;
 type PrimitiveSpanProps = React.ComponentPropsWithoutRef<ELEMENT_TYPE>;
 
@@ -20,7 +21,7 @@ const AvatarRoot = React.forwardRef<AvatarEelement, AvatarProps>(
   ({ ...avatarProps }, ref) => {
     return (
       <AvatarProvider>
-        <span {...avatarProps} ref={ref} />
+        <Primitive.span {...avatarProps} ref={ref} />
       </AvatarProvider>
     );
   },

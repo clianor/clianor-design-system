@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import { Primitive } from '..';
 import { useAvatar } from './avatar.context';
 
 /* -------------------------------------------------------------------------------------------------
@@ -7,8 +8,8 @@ import { useAvatar } from './avatar.context';
  * -----------------------------------------------------------------------------------------------*/
 
 const NAME = 'AvatarFallback';
-type ELEMENT_TYPE = 'span';
 
+type ELEMENT_TYPE = typeof Primitive.span;
 type AvatarEelement = React.ElementRef<ELEMENT_TYPE>;
 type PrimitiveSpanProps = React.ComponentPropsWithoutRef<ELEMENT_TYPE>;
 
@@ -29,7 +30,7 @@ const AvatarFallback = React.forwardRef<AvatarEelement, AvatarFallbackProps>(
     }, [delayMs]);
 
     return canRender && imageLoadingStatus !== 'loaded' ? (
-      <span
+      <Primitive.span
         {...avatarFallbackProps}
         ref={ref}
         data-status={imageLoadingStatus}

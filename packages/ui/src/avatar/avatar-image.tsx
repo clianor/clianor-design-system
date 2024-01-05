@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useState } from 'react';
 
+import { Primitive } from '..';
 import {
   type AvatarImageLoadingStatus,
   useAvatarActions,
@@ -10,8 +11,8 @@ import {
  * -----------------------------------------------------------------------------------------------*/
 
 const NAME = 'AvatarImage';
-type ELEMENT_TYPE = 'img';
 
+type ELEMENT_TYPE = typeof Primitive.img;
 type AvatarEelement = React.ElementRef<ELEMENT_TYPE>;
 type PrimitiveImgProps = React.ComponentPropsWithoutRef<ELEMENT_TYPE>;
 
@@ -27,7 +28,7 @@ const AvatarImage = React.forwardRef<AvatarEelement, AvatarImageProps>(
     }, [imageLoadingStatus, setImageLoadingStatus]);
 
     return imageLoadingStatus === 'loaded' ? (
-      <img
+      <Primitive.img
         {...avatarImageProps}
         ref={ref}
         src={src}

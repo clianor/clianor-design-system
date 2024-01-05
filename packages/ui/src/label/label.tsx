@@ -1,12 +1,14 @@
 import React from 'react';
 
+import { Primitive } from '..';
+
 /* -------------------------------------------------------------------------------------------------
  * Label
  * -----------------------------------------------------------------------------------------------*/
 
-const NAME = 'label' as const;
-type ELEMENT_TYPE = 'label';
+const NAME = 'Label' as const;
 
+type ELEMENT_TYPE = typeof Primitive.label;
 type LabelElement = React.ElementRef<ELEMENT_TYPE>;
 type PrimitiveLabelProps = React.ComponentPropsWithoutRef<ELEMENT_TYPE>;
 
@@ -14,7 +16,7 @@ type LabelProps = PrimitiveLabelProps;
 
 const Label = React.forwardRef<LabelElement, LabelProps>((props, ref) => {
   return (
-    <label
+    <Primitive.label
       {...props}
       ref={ref}
       onMouseDown={(event) => {
