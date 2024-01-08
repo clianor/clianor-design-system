@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Primitive } from '..';
+import { Primitive } from '@repo/core';
+
 import { AvatarFallback, type AvatarFallbackProps } from './avatar-fallback';
 import { AvatarImage, type AvatarImageProps } from './avatar-image';
 import { AvatarProvider } from './avatar.context';

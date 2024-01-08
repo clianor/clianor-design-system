@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useState } from 'react';
 
-import { Primitive } from '..';
+import { Primitive } from '@repo/core';
+
 import {
   type AvatarImageLoadingStatus,
   useAvatarActions,

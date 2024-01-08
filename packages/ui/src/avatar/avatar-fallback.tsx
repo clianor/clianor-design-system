@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import { Primitive } from '..';
+import { Primitive } from '@repo/core';
+
 import { useAvatar } from './avatar.context';
 
 /* -------------------------------------------------------------------------------------------------

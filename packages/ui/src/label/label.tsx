@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Primitive } from '..';
+import { Primitive } from '@repo/core';
 
 /* -------------------------------------------------------------------------------------------------
  * Label
