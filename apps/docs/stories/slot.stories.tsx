@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Slot, Slottable } from '@repo/ui';
+import { Slot, Slottable } from '@repo/core';
 
 const meta: Meta<typeof Slot> = {
   component: Slot,
